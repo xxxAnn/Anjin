@@ -2,7 +2,7 @@ use super::coords::Coords2D;
 
 const DISTANCE_MIN: f32 = 20.;
 
-pub struct Line<T>
+pub struct UserDrawnLine<T>
 where T: Coords2D {
     distance: f32,
     _raw: Vec<T>,
@@ -10,7 +10,7 @@ where T: Coords2D {
     closed: bool
 }
 
-impl<T> Line<T>
+impl<T> UserDrawnLine<T>
 where T: Coords2D {
     pub fn new_point(&mut self, coords: T) {
         if !(self.started) {
@@ -35,8 +35,8 @@ where T: Coords2D {
         }
         self._raw.push(coords);
     }
-    pub fn new() -> Line<T> {
-        Line {
+    pub fn new() -> UserDrawnLine<T> {
+        UserDrawnLine {
             distance: 0.,
             _raw: Vec::new(),
             closed: false,

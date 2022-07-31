@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 pub mod coords;
-pub mod line;
+pub mod userdrawnline;
 
-pub use line::Line;
+pub use userdrawnline::UserDrawnLine;
 pub use coords::Coordinates2D;
