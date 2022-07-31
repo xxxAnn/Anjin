@@ -1,8 +1,6 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
-}
+#![allow(non_snake_case)]
+pub mod coords;
+pub mod line;
+
+pub use line::Line;
+pub use coords::Coordinates2D;
