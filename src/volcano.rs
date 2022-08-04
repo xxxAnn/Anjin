@@ -3,7 +3,8 @@ use vulkano::{
     buffer::{BufferUsage, CpuAccessibleBuffer}, 
     device::physical::{PhysicalDevice}, 
     command_buffer::{AutoCommandBufferBuilder, CommandBufferUsage},
-    device::{Device, Features, DeviceCreateInfo, QueueCreateInfo}
+    device::{Device, DeviceCreateInfo, QueueCreateInfo}, 
+    sync::{self, GpuFuture}
 };
 
 pub fn initiate_volcano() {
@@ -48,4 +49,14 @@ pub fn initiate_volcano() {
     
     let command_buffer = builder.build().unwrap();
     
+    let future = sync::now(device.clone())
+        .then_execute(queue.clone(), command_buffer)
+        .unwrap()
+        .then_signal_fence_and_flush() 
+        .unwrap();
+
+    future.wait(None).unwrap();
+    let src_content = source.read().unwrap();
+    let destination_content = destination.read().unwrap();
+    assert_eq!(&*src_content, &*destination_content);
 }
